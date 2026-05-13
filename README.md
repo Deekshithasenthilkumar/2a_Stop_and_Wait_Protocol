@@ -28,5 +28,7 @@ print(s.recv(1024).decode())
 s.send("Acknowledgement Recived".encode())
 ```
 ## OUTPUT
+<img width="1097" height="363" alt="image" src="https://github.com/user-attachments/assets/bf5f94f2-5855-40a1-b583-f54da161ec2c" />
+
 ## RESULT
 Thus, python program to perform stop and wait protocol was successfully executed.
