@@ -11,21 +11,44 @@ To write a python program to perform stop and wait protocol
 ## PROGRAM
 ## CLIENT:
 ```
-import socket s=socket.socket() s.bind(('localhost',8000)) s.listen(5) c,addr=s.accept()
-while True:
-i=input("Enter a data: ")
-c.send(i.encode())
-Type your text
-ack=c.recv(1024).decode()
-if ack: print(ack) continue
-else: c.close() break
+import socket
+
+s = socket.socket()
+s.connect(('localhost', 8000))
+
+n = int(input("Enter number of frames: "))
+
+for i in range(n):
+    msg = input("Enter frame: ")
+    s.send(msg.encode())
+
+    ack = s.recv(1024).decode()
+    print("Received:", ack)
+
+s.close()
 ```
 
 ## SERVER:
 ```
-import socket s=socket.socket() s.connect(('localhost',8000)) while True:
-print(s.recv(1024).decode())
-s.send("Acknowledgement Recived".encode())
+import socket
+
+s = socket.socket()
+s.bind(('localhost', 8000))
+s.listen(1)
+
+print("Waiting for connection...")
+conn, addr = s.accept()
+print("Connected to", addr)
+
+while True:
+    data = conn.recv(1024).decode()
+    if not data:
+        break
+
+    print("Frame received:", data)
+    conn.send("ACK".encode())
+
+conn.close()
 ```
 ## OUTPUT
 <img width="1097" height="363" alt="image" src="https://github.com/user-attachments/assets/bf5f94f2-5855-40a1-b583-f54da161ec2c" />
